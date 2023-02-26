@@ -1,5 +1,7 @@
 #include "App.h"
 
+App* App::s_Instance = nullptr;
+
 App::App(std::string winName, int winWidth, int winHeight, bool fullScreen)
 {
 	isRunning = false;
@@ -36,6 +38,7 @@ App::App(std::string winName, int winWidth, int winHeight, bool fullScreen)
 
 App::~App()
 {
+	SDL_DestroyWindow(m_window->getWindow());
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
@@ -60,8 +63,58 @@ void App::Run()
 		SDL_SetRenderDrawColor(renderer, 121, 121, 121, 255);
 		SDL_RenderClear(renderer);
 		//your stuff to render would typically go here. - Display the Scene
+
+		// Run Each Layer's Update Function
+		/*for (Layer* layer : m_LayerStack)
+			layer->OnUpdate();*/
+		for (double x = 0.0; x < 1.0; x += 0.001)
+		{
+			for (double y = 0.0; y < 1.0; y += 0.001)
+			{
+				double pointX = std::lerp(-2.0, 2.0, x);
+				double pointY = std::lerp(-2.0, 2.0, y);
+				int iters = IsInSet(std::complex<double>(pointX, pointY));
+				// Is in set
+				if (iters == 0)
+				{
+					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+					SDL_RenderDrawPointF(renderer, x * 800, y * 800);
+				}
+				else {
+					SDL_SetRenderDrawColor(renderer,
+						5*iters % 255,
+						5 * iters % 255,
+						10 * iters % 255,
+						255);
+					SDL_RenderDrawPointF(renderer, x * 800, y * 800);
+				}
+			}
+		}
+
 		SDL_RenderPresent(renderer);
 		// UPDATE
 		//if things could update the code would go in here.
 	}
+}
+
+int App::IsInSet(std::complex<double> c)
+{
+	std::complex<double> z(0, 0);
+	for (int i = 0; i < 25; i++)
+	{
+		z = z * z + c;
+		// if the norm is greater than some number,
+		// then z is DIVERGING and is not in the set
+		if (std::norm(z) > 10)
+		{
+			return i;
+		}
+	}
+	// if 0 is returned, value for c is in the set
+	return 0;
+}
+
+void App::PushLayer(Layer* layer)
+{
+	m_LayerStack.PushLayer(layer);
 }
