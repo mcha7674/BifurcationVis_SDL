@@ -5,8 +5,6 @@
 #include <numeric>
 #include <cmath>
 
-#define RENDERER App::Get().GetRenderer()
-
 class MandelBrot : public Layer
 {
 public:
@@ -20,6 +18,8 @@ public:
 	int IsInSet(std::complex<double> c);
 
 private:
-
+	std::shared_ptr<RenderManager> renderManager;
+	int resolution;
+	bool isLoading;
 };
 
