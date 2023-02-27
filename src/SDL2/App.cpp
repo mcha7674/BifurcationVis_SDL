@@ -7,8 +7,7 @@ App::App(std::string winName, int winWidth, int winHeight)
 {
 	s_Instance = this;
 	isRunning = true;
-	//renderManager = std::make_shared<RenderManager>(winName, winWidth, winHeight);
-		
+	
 }
 
 App::~App()

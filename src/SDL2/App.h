@@ -15,20 +15,15 @@ public:
 
 	inline static App& Get() { return *s_Instance; }
 
-	//inline std::shared_ptr<RenderManager> GetRenderManager() { return renderManager; }
-
 	inline int GetWinWidth() { return m_Width; }
 	inline int GetWinHeight() { return m_Height; }
 
 private:
-	//std::shared_ptr<RenderManager> renderManager;
 	LayerStack m_LayerStack;
-	int m_windowFlags;
 	int m_Width;
 	int m_Height;
 	std::string m_winName;
 	bool isRunning;
-	bool m_fullScreen;
 	// Singleton Instance
 	static App* s_Instance;
 };
