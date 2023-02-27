@@ -1,4 +1,3 @@
-#include <SDL.h>
 #include <iostream>
 #include "SDL2/App.h"
 #include "MandelBrot.h"
@@ -8,7 +7,7 @@ class MandelBrotApp : public App
 {
 public:
 	MandelBrotApp() 
-		:App("The MandelBrot Set", 800, 800, false)
+		:App("The MandelBrot Set", 800, 800)
 	{
 		PushLayer(new MandelBrot());
 	}

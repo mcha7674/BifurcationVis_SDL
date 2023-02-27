@@ -1,13 +1,13 @@
 #pragma once
 #include <SDL.h>
 #include <iostream>
-#include "Window.h"
 #include "LayerStack.h"
-#include <complex>
-class App
+#include "RenderManager.h"
+
+class App : public RenderManager
 {
 public:
-	App(std::string windowName, int winWidth, int winHeight, bool fullScreen);
+	App(std::string windowName, int winWidth, int winHeight);
 	virtual ~App();
 	void Run();
 	void PushLayer(Layer* layer);
@@ -15,15 +15,20 @@ public:
 
 	inline static App& Get() { return *s_Instance; }
 
-	inline SDL_Renderer* GetRenderer() { return renderer; }
+	//inline std::shared_ptr<RenderManager> GetRenderManager() { return renderManager; }
 
-	int IsInSet(std::complex<double> c);
+	inline int GetWinWidth() { return m_Width; }
+	inline int GetWinHeight() { return m_Height; }
+
 private:
-	std::unique_ptr<Window> m_window;
-	SDL_Renderer* renderer;
+	//std::shared_ptr<RenderManager> renderManager;
 	LayerStack m_LayerStack;
-
+	int m_windowFlags;
+	int m_Width;
+	int m_Height;
+	std::string m_winName;
 	bool isRunning;
+	bool m_fullScreen;
 	// Singleton Instance
 	static App* s_Instance;
 };

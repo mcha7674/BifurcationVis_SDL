@@ -20,6 +20,6 @@ public:
 	int IsInSet(std::complex<double> c);
 
 private:
-	
+
 };
 
