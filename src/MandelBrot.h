@@ -19,7 +19,8 @@ public:
 
 private:
 	std::shared_ptr<RenderManager> renderManager;
-	int resolution;
+	double resolution;
+	int recursions;
 	bool isLoading;
 	std::pair<double, double> range;
 };

@@ -6,10 +6,12 @@ MandelBrot::MandelBrot()
 {
 	renderManager = std::make_shared<RenderManager>(App::Get().GetWindow());
 	isLoading = true;
-	// number of recursions (affects resolution)
-	resolution = 100;
+	// number of recursions of the z = z^2 + c equation
+	recursions = 100;
+	// Resolution of points
+	resolution = 0.001;
 	// MandelBrot ranges from c = -2 to c = +2
-	range = { -2.0, 2.0 };
+	range = { -2.0, 1.25 };
 }
 
 void MandelBrot::OnAttach()
@@ -23,9 +25,9 @@ void MandelBrot::OnUpdate()
 {
 	renderManager->PrepScene();
 
-	for (double x = 0.0; x < 1.0; x += 0.001)
+	for (double x = 0.0; x < 1.0; x += resolution)
 	{
-		for (double y = 0.0; y < 1.0; y += 0.001)
+		for (double y = 0.0; y < 1.0; y += resolution)
 		{
 			double pointX = std::lerp(range.first, range.second, x);
 			double pointY = std::lerp(range.first, range.second, y);
@@ -38,9 +40,9 @@ void MandelBrot::OnUpdate()
 			}
 			else { // if a divergent coordinate, then Color these points
 				renderManager->SetRenderColor(
-					3 * iters % 255, 
+					2 * iters % 255, 
 					2 * iters % 255,
-					5 * iters % 255);
+					6 * iters % 255);
 			}
 			renderManager->DrawPointF( x * App::Get().GetWinWidth(), y * App::Get().GetWinHeight());
 		}
@@ -56,13 +58,13 @@ int MandelBrot::IsInSet(std::complex<double> c)
 {
 	// start z off at 0
 	std::complex<double> z(0, 0);
-	for (int i = 0; i < resolution; i++)
+	for (int i = 0; i < recursions; i++)
 	{
 		// recurse the z function a 'resolution' number of times
 		z = z * z + c;
 		// if the norm is greater than some number,
 		// then z is DIVERGING and is not in the set
-		if (std::norm(z) > 20) { return i; }
+		if (std::norm(z) > 10) { return i; }
 	}
 	// if 0 is returned, value for c is in the set
 	return 0;
