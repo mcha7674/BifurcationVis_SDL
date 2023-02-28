@@ -1,67 +1,35 @@
 #include <SDL.h>
 #include <iostream>
-
-
-//don't do this, this is just an example
-SDL_Renderer* renderer;
-SDL_Window* window;
-bool isRunning;
-bool fullscreen;
-void handleEvents();
-void update();
-void render();
+#include "SDL2/RenderWindow.h"
 
 
 // With SDL, the main function must include the parameters.
 int main(int arg, char* args[]) {
-
-	fullscreen = false;
-	int flags = 0;
-	flags = SDL_WINDOW_RESIZABLE;
-	if (fullscreen) {
-		flags = flags | SDL_WINDOW_FULLSCREEN;
-	}
-	// Init_EVERYTHING flag will initialize ALL of SDL (Video, Audio, timer, etc)
+	
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		std::cout << "Subsystems Initialized!\n";
-
-		// Window Creation
-		window = SDL_CreateWindow("Test Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 500, 500, flags);
-		if (window) {
-			std::cout << "Window Created!\n";
-			SDL_SetWindowMinimumSize(window, 100, 100);
-		}
-		/*Renderer Creation, needs window, driver specification(-1 means use the first one that 
-		satisfies everything we need), and finally the last place is for any renderer flags.
-		RendererFlags can include things like SDL_RENDER_ACCELERATED which tells sdl to use the graphics card
-		instead of the cpu for rendering.
-		*/ 
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 121, 121, 121, 255);
-			std::cout << "Renderer created!\n";
-			SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-			isRunning = true;
-		}
 	}
 
+	// Window and Renderer Creation and Initialization
+	RenderWindow window("MandelBrot Visualizer", 1280, 720);
+
+	bool isRunning;
+
 	while (isRunning) {
-		OnEvent();
+		OnEvent(isRunning);
 		OnUpdate();
 		OnRender();
 	}
 
 	//frees memory associated with renderer and window
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);	//error here
+	window.cleanup();
 	SDL_Quit();
-
 
 	return 0;
 }
 
 //handles any events that SDL noticed.
-void OnEvent() {
+void OnEvent(bool &isRunning) {
 	//the only event we'll check is the  SDL_QUIT event.
 	SDL_Event event;
 	SDL_PollEvent(&event);
