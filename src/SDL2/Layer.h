@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "EventListener.h"
 
 class Layer
 {
@@ -9,8 +10,7 @@ public:
 
 	virtual void OnAttach() {}
 	virtual void OnDetach() {}
-	virtual void OnUpdate() {}
-	virtual void OnEvent() {}
+	virtual void OnUpdate(EventListener& eventListener) {}
 
 	inline const std::string& GetName() const { return m_DebugName; }
 protected:

@@ -19,9 +19,11 @@ public:
 
 	inline int GetWinWidth() { return m_Width; }
 	inline int GetWinHeight() { return m_Height; }
+	inline void Quit() { isRunning = false; }
 
 private:
 	SDL_Window* m_window;
+	EventListener m_eventListener;
 	LayerStack m_LayerStack;
 	int m_Width;
 	int m_Height;

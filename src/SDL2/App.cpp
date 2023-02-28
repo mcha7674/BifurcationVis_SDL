@@ -31,27 +31,13 @@ App::~App()
 
 void App::Run()
 {
-
 	while (isRunning) {
-		//handles any events that SDL noticed
-		//the only event we'll check is the  SDL_QUIT event.
-		SDL_Event event;
 
-		while (SDL_PollEvent(&event))
-		{
-			switch (event.type) {
-			case SDL_QUIT:
-				isRunning = false;
-				break;
-			default:
-				break;
-			}
-		}
-		
 		// Run Each Layer's Update Function
 		for (Layer* layer : m_LayerStack)
-			layer->OnUpdate();
+			layer->OnUpdate(m_eventListener);
 
+		SDL_Delay(0);
 	}
 }
 

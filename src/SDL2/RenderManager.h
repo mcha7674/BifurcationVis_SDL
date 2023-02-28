@@ -11,6 +11,7 @@ public:
 	void PrepScene();
 	void Present();
 	void DrawPointF(float x, float y);
+	void DrawPoint(int x, int y);
 	void SetRenderColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
 
 private:

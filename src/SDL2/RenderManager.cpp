@@ -41,6 +41,10 @@ void RenderManager::DrawPointF(float x, float y)
 {
 	SDL_RenderDrawPointF(m_renderer, x, y);
 }
+void RenderManager::DrawPoint(int x, int  y)
+{
+	SDL_RenderDrawPoint(m_renderer, x, y);
+}
 
 void RenderManager::SetRenderColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 {
