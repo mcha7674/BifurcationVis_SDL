@@ -15,4 +15,3 @@
 
 # dont add .git file
 .git/
-/src/MandelBrot.cpp
