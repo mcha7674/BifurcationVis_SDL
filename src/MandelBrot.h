@@ -21,5 +21,6 @@ private:
 	std::shared_ptr<RenderManager> renderManager;
 	int resolution;
 	bool isLoading;
+	std::pair<double, double> range;
 };
 
