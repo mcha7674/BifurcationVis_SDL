@@ -23,7 +23,6 @@ public:
 
 private:
 	SDL_Window* m_window;
-	EventListener m_eventListener;
 	LayerStack m_LayerStack;
 	int m_Width;
 	int m_Height;

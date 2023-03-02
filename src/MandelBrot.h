@@ -4,6 +4,7 @@
 #include "SDL2/EventListener.h"
 #include <complex>
 #include <cmath>
+#include <unordered_map>
 
 class MandelBrot : public Layer
 {
@@ -13,7 +14,11 @@ public:
 	// Layer Functions
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
-	virtual void OnUpdate(EventListener& eventListener) override;
+	virtual void OnUpdate() override;
+	// Create Fractal
+	void CreateFractal();
+	// Render
+	void RenderSet();
 	// returns 0 is complex number c is in set, i otherwise.
 	int IsInSet(std::complex<double> c);
 	// maps screen coordinates to world coordinates (outputMin, outputMax)
@@ -28,10 +33,22 @@ public:
 	}
 
 private:
+	EventListener eventListener;
+	// Color of each Pixel on screen
+	std::vector< std::vector<int>> pixelIters;
+	// Render manager to render pixels
 	std::shared_ptr<RenderManager> renderManager;
+	// Number of recursive iterations for the set.
 	int recursions;
+	int currentIterations;
+	// store color intensity
 	int cIntensity;
-	bool isLoading;
+	// Range of the mandelbrot set we will render (normale -2 to 2)
 	std::pair<double, double> range;
+	double zoomFactor;
+	int pixelX;
+	int pixelY;
+	int scrWidth;
+	int scrHeight;
 };
 

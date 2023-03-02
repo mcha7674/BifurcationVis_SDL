@@ -10,7 +10,7 @@ public:
 
 	virtual void OnAttach() {}
 	virtual void OnDetach() {}
-	virtual void OnUpdate(EventListener& eventListener) {}
+	virtual void OnUpdate() {}
 
 	inline const std::string& GetName() const { return m_DebugName; }
 protected:

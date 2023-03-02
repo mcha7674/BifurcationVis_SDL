@@ -35,7 +35,7 @@ void App::Run()
 
 		// Run Each Layer's Update Function
 		for (Layer* layer : m_LayerStack)
-			layer->OnUpdate(m_eventListener);
+			layer->OnUpdate();
 
 		SDL_Delay(0);
 	}
