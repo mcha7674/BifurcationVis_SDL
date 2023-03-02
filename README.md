@@ -2,7 +2,7 @@
 A visualizer built with SDL2 that renders the Mandelbrot set with customizable parameters. 
 Will eventually harbor a zooming feature with multi-threaded optimizations in later iterations.
 
-<img src="MandelBrotSet.PNG" width="400" height="400" />
+<img src="MandelBrotSet.PNG" width="600" height="500" />
 
 ## Usage
 Execute the Windows batch file in the scripts folder (after cloning the project) to build the VS Solution.
